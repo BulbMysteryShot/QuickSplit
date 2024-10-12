@@ -32,7 +32,7 @@ export default function HomeScreen() {
     }
 
     const [image, setImage] = useState(null)
-    const [name, setName] = useState('Evan Erickson')
+    const [name, setName] = useState(null)
 
     useEffect(() => {
         (async () => {
