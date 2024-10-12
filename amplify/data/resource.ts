@@ -6,23 +6,23 @@ adding a new "isDone" field as a boolean. The authorization rule below
 specifies that any unauthenticated user can "create", "read", "update", 
 and "delete" any "Todo" records.
 =========================================================================*/
-const schema = a.schema({
-  Todo: a
-    .model({
-      content: a.string(),
-      isDone: a.boolean()
-    })
-    .authorization(allow => [allow.owner()])
-});
+// const schema = a.schema({
+//   Todo: a
+//     .model({
+//       content: a.string(),
+//       isDone: a.boolean()
+//     })
+//     .authorization(allow => [allow.owner()])
+// });
 
-export type Schema = ClientSchema<typeof schema>;
+// export type Schema = ClientSchema<typeof schema>;
 
-export const data = defineData({
-  schema,
-  authorizationModes: {
-    defaultAuthorizationMode: 'userPool'
-  }
-});
+// export const data = defineData({
+//   schema,
+//   authorizationModes: {
+//     defaultAuthorizationMode: 'userPool'
+//   }
+// });
 
 /*== STEP 2 ===============================================================
 Go to your frontend source code. From your client-side code, generate a
@@ -35,11 +35,11 @@ cases: https://docs.amplify.aws/gen2/build-a-backend/data/connect-to-API/
 =========================================================================*/
 
 
-"use client"
-import { generateClient } from "aws-amplify/data";
-import type { Schema } from "@/amplify/data/resource";
+// "use client"
+// import { generateClient } from "aws-amplify/data";
+// import type { Schema } from "@/amplify/data/resource";
 
-const client = generateClient<Schema>() // use this Data client for CRUDL requests
+// const client = generateClient<Schema>() // use this Data client for CRUDL requests
 
 
 /*== STEP 3 ===============================================================
@@ -49,6 +49,6 @@ Fetch records from the database and use them in your frontend component.
 
 /* For example, in a React component, you can use this snippet in your
   function's RETURN statement */
-const { data: todos } = await client.models.Todo.list()
+// const { data: todos } = await client.models.Todo.list()
 
-return <ul>{todos.map(todo => <li key={todo.id}>{todo.content}</li>)}</ul>
+// return <ul>{todos.map(todo => <li key={todo.id}>{todo.content}</li>)}</ul>

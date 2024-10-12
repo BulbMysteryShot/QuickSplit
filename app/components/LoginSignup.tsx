@@ -4,7 +4,7 @@ import { Button, View, StyleSheet, SafeAreaView } from "react-native";
 import { Amplify } from "aws-amplify";
 import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react-native";
 
-import outputs from "./amplify_outputs.json";
+import outputs from "../../amplify_outputs.json";
 
 Amplify.configure(outputs);
 
@@ -24,7 +24,6 @@ const LoginSignup = () => {
         <Authenticator>
           <SafeAreaView style={styles.container}>
             <SignOutButton />
-            <TodoList />
           </SafeAreaView>
         </Authenticator>
       </Authenticator.Provider>
