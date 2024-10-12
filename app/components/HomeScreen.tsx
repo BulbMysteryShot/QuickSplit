@@ -1,6 +1,11 @@
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { Button, StyleSheet, Text, TouchableOpacity, View, Platform, Image, TextInput } from 'react-native';
+import Amplify, { } from 'aws-amplify'
+// import awsconfig from './aws-exports';
+// Might need to switch line 7 to awsconfig
+import { StatusBar } from 'expo-status-bar';
+import React, { useState, useEffect } from 'react';
+import * as ImagePicker from 'expo-image-picker';
 
 
 export default function HomeScreen() {
@@ -26,6 +31,45 @@ export default function HomeScreen() {
         setFacing(current => (current === 'back' ? 'front' : 'back'));
     }
 
+    const [image, setImage] = useState(null)
+    const [name, setName] = useState('Evan Erickson')
+
+    useEffect(() => {
+        (async () => {
+            if (Platform.OS !== 'web') {
+                const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+                if (status !== 'granted') {
+                    alert('Sorry, we need camera roll permissions to make this work!');
+                }
+            }
+        })();
+    }, []);
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        console.log(result)
+
+        async function pathToImageFile(data: string | URL | Request) {
+            try {
+                const response = await fetch(data);
+                const blob = await response.blob();
+                //await Storage.put(`customers/${name}`, blob, {
+                 //   contentType: 'image/jpeg', // contentType is optional
+                //});
+            } catch (err) {
+                console.log('Error uploading file:', err);
+            }
+        }
+        // later
+        //pathToImageFile(result.uri);
+    }
+
     return (
         <View style={styles.container}>
             <CameraView style={styles.camera} facing={facing}>
@@ -33,6 +77,9 @@ export default function HomeScreen() {
                     <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
                         <Text style={styles.text}>Flip Camera</Text>
                     </TouchableOpacity>
+                    <Button title="Pick an image from camera roll" onPress={pickImage} />
+                    {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+                    <Button title="Upload image" onPress={() => {alert(image)}} />
                 </View>
             </CameraView>
         </View>
