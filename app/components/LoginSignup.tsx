@@ -24,7 +24,6 @@ const LoginSignup = () => {
         <Authenticator>
           <SafeAreaView style={styles.container}>
             <SignOutButton />
-            <TodoList />
           </SafeAreaView>
         </Authenticator>
       </Authenticator.Provider>
